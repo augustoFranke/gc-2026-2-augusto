@@ -7,6 +7,7 @@ const formulario = document.getElementById("formulario");
 const mensagem = document.getElementById("mensagem");
 const lista = document.getElementById("lista");
 const aviso = document.getElementById("aviso");
+const filtroProfissional = document.getElementById("filtro-profissional");
 
 // O localStorage nem sempre esta disponivel: abrindo o arquivo direto do disco
 // (file://), em aba anonima, ou com o navegador bloqueando dados de site, o
@@ -48,14 +49,17 @@ function horarioOcupado(consultas, nova) {
 }
 
 function renderizar() {
-  const consultas = carregar().sort((a, b) =>
-    (a.data + a.hora).localeCompare(b.data + b.hora)
-  );
+  const consultas = carregar()
+    .filter((c) => !filtroProfissional.value || c.profissional === filtroProfissional.value)
+    .sort((a, b) => (a.data + a.hora).localeCompare(b.data + b.hora));
 
   lista.innerHTML = "";
 
   if (consultas.length === 0) {
-    lista.innerHTML = '<tr><td colspan="4" class="vazio">Nenhuma consulta agendada.</td></tr>';
+    const texto = filtroProfissional.value
+      ? "Nenhuma consulta agendada para este profissional."
+      : "Nenhuma consulta agendada.";
+    lista.innerHTML = `<tr><td colspan="4" class="vazio">${texto}</td></tr>`;
     return;
   }
 
@@ -89,5 +93,7 @@ formulario.addEventListener("submit", (evento) => {
   formulario.reset();
   renderizar();
 });
+
+filtroProfissional.addEventListener("change", renderizar);
 
 renderizar();

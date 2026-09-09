@@ -10,6 +10,12 @@ Não precisa instalar nada. Abra o arquivo `index.html` no navegador.
 As consultas ficam salvas no próprio navegador (`localStorage`). Para começar do zero, apague os
 dados do site nas configurações do navegador, ou rode `localStorage.clear()` no console.
 
+## Filtrar consultas
+
+Use "Filtrar por profissional", acima da lista, para exibir apenas as consultas do profissional
+selecionado. "Todos os profissionais" restaura a lista completa. O filtro não apaga consultas e
+continua aplicado ao agendar uma nova consulta.
+
 ## Estrutura
 
 | Arquivo | O que é |
